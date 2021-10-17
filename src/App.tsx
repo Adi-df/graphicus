@@ -4,6 +4,7 @@ import { Function } from "./components/Function";
 import { Depth } from "./components/Depth";
 import { Canvas } from "./components/Canvas";
 import { Timeline } from "./components/Timeline";
+import { Rotating } from "./components/Rotating";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Function width="50%" />
         <Box marginLeft="20px" width="50%">
           <Depth />
+          <Rotating margin="20px 0 0 0" />
           <Timeline margin="20px 0 0 0" />
         </Box>
       </Center>
