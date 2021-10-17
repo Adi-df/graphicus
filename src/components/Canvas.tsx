@@ -5,7 +5,7 @@ import { lerp, Point, Polygon } from "../math";
 import { FunctionDef } from "./Function";
 
 export const Canvas: FC = () => {
-  const { func, depth, frame, maxFrame } = useStore();
+  const { func, depth, rotating, frame, maxFrame } = useStore();
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -47,6 +47,7 @@ export const Canvas: FC = () => {
 
     let rootTriangle: Polygon = Array.from(Array(3))
       .map((_, i) => (TAU / 3) * i)
+      .map((v) => (rotating ? v + (TAU / maxFrame) * frame : v))
       .map((a) => [
         CENTER[0] + Math.cos(a) * RADIUS,
         CENTER[1] + Math.sin(a) * RADIUS,
