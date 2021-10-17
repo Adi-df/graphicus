@@ -7,13 +7,17 @@ import {
 } from "@chakra-ui/slider";
 import React, { FC, useState } from "react";
 
-export const Depth: FC = () => {
+export const Depth: FC<{
+  height?: string;
+  width?: string;
+  margin?: string;
+}> = (props) => {
   const [depth, setDepth] = useState(4);
 
   return (
     <Box
-      w="100%"
-      p="5%"
+      {...props}
+      padding="5%"
       color="white"
       border="white 2px solid"
       borderRadius="2xl"

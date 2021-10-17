@@ -36,7 +36,11 @@ export const InputNumber: FC<{
   </Box>
 );
 
-export const Function: FC = () => {
+export const Function: FC<{
+  height?: string;
+  width?: string;
+  margin?: string;
+}> = (props) => {
   const [func, setFunc] = useState<FunctionDef>({
     type: "afine",
     coef: 1,
@@ -45,8 +49,8 @@ export const Function: FC = () => {
 
   return (
     <Box
-      w="100%"
-      p="5%"
+      {...props}
+      padding="5%"
       color="white"
       border="2px"
       borderColor="white"
