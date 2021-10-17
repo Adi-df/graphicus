@@ -15,8 +15,7 @@ export const Depth: FC = () => {
       w="100%"
       p="5%"
       color="white"
-      border="2px"
-      borderColor="white"
+      border="white 2px solid"
       borderRadius="2xl"
     >
       <Text fontSize="3xl">Depth :</Text>

@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Center, Flex, Spacer } from "@chakra-ui/react";
 import { Function } from "./components/Function";
 import { Depth } from "./components/Depth";
+import { Canvas } from "./components/Canvas";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <Depth />
       </Center>
       <Spacer />
-      <Center w="40%"></Center>
+      <Center w="40%">
+        <Canvas />
+      </Center>
       <Spacer />
     </Flex>
   );
