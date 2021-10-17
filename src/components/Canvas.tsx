@@ -83,7 +83,7 @@ export const Canvas: FC = () => {
       convertFunc(func)(frame / maxFrame),
       convertFunc(func)
     );
-  }, [frame, context, depth, func, maxFrame]);
+  }, [frame, context, depth, rotating, func, maxFrame]);
 
   return (
     <Box border="white 2px solid" borderRadius="2xl" width="100%" height="100%">
