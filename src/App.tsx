@@ -13,7 +13,7 @@ function App() {
         <Function width="50%" />
         <Box marginLeft="20px" width="50%">
           <Depth />
-          <Timeline />
+          <Timeline margin="20px 0 0 0" />
         </Box>
       </Center>
       <Spacer />
