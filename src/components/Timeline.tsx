@@ -10,13 +10,18 @@ import {
 } from "@chakra-ui/react";
 import { FiPlay, FiStopCircle } from "react-icons/fi";
 import React, { FC, useEffect, useState } from "react";
+import { useStore } from "../store";
 
 export const Timeline: FC<{
   height?: string;
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [time, setTime] = useState(0);
+  const [frame, nextFrame, setFrame] = useStore((state) => [
+    state.frame,
+    state.nextFrame,
+    state.setFrame,
+  ]);
   const [animating, setAnimating] = useState(false);
   const [animatingInterval, setAnimatingInterval] = useState<null | number>(
     null
@@ -25,16 +30,13 @@ export const Timeline: FC<{
   useEffect(() => {
     if (animating && !animatingInterval) {
       setAnimatingInterval(
-        setInterval(
-          () => setTime((t) => (t + 1) % 240),
-          1000 / 20
-        ) as unknown as number
+        setInterval(() => nextFrame(), 1000 / 20) as unknown as number
       );
     } else if (!animating) {
       clearInterval(animatingInterval || undefined);
       setAnimatingInterval(null);
     }
-  }, [animating, animatingInterval]);
+  }, [animating, animatingInterval, nextFrame]);
 
   return (
     <Box
@@ -46,7 +48,12 @@ export const Timeline: FC<{
     >
       <Text fontSize="3xl">Timeline :</Text>
       <Flex>
-        <Slider min={0} max={240} value={time} onChange={(e) => setTime(e)}>
+        <Slider
+          min={0}
+          max={240}
+          value={frame}
+          onChange={(e) => setFrame((_) => e)}
+        >
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
@@ -63,7 +70,7 @@ export const Timeline: FC<{
           alignItems="center"
           color="black"
         >
-          {time}
+          {frame}
         </Text>
       </Flex>
       <Flex>

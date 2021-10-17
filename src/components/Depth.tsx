@@ -5,14 +5,15 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@chakra-ui/slider";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
+import { useStore } from "../store";
 
 export const Depth: FC<{
   height?: string;
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [depth, setDepth] = useState(4);
+  const [depth, setDepth] = useStore((state) => [state.depth, state.setDepth]);
 
   return (
     <Box
@@ -28,7 +29,7 @@ export const Depth: FC<{
           min={1}
           max={10}
           defaultValue={depth}
-          onChange={(e) => setDepth(e)}
+          onChange={(e) => setDepth((_) => e)}
         >
           <SliderTrack>
             <SliderFilledTrack />

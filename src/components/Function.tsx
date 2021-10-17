@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import {
   Box,
   Text,
@@ -10,6 +10,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Provider, Node } from "@nteract/mathjax";
+import { useStore } from "../store";
 
 export type FunctionDef =
   | { type: "afine"; coef: number; dec: number }
@@ -41,11 +42,7 @@ export const Function: FC<{
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [func, setFunc] = useState<FunctionDef>({
-    type: "afine",
-    coef: 1,
-    dec: 0,
-  });
+  const [func, setFunc] = useStore((state) => [state.func, state.setFunc]);
 
   return (
     <Box
@@ -63,7 +60,7 @@ export const Function: FC<{
           color="black"
           marginBottom="10px"
           onChange={({ target: { value } }) =>
-            setFunc(
+            setFunc((_) =>
               value === "power"
                 ? { type: "power", coef: 1, dec: 0, power: 1 }
                 : value === "inverse"
@@ -79,18 +76,18 @@ export const Function: FC<{
         <InputNumber
           name="Coefficient"
           defaultValue={1}
-          onChange={(e) => setFunc((f) => ({ ...f, coef: e }))}
+          onChange={(e) => setFunc((f) => ({ ...f.func, coef: e }))}
         />
         <InputNumber
           name="Decalage"
           defaultValue={0}
-          onChange={(e) => setFunc((f) => ({ ...f, dec: e }))}
+          onChange={(e) => setFunc((f) => ({ ...f.func, dec: e }))}
         />
         {func.type === "inverse" || func.type === "power" ? (
           <InputNumber
             name="Power"
             defaultValue={1}
-            onChange={(e) => setFunc((f) => ({ ...f, power: e }))}
+            onChange={(e) => setFunc((f) => ({ ...f.func, power: e }))}
           />
         ) : null}
       </Box>
