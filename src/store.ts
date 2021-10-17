@@ -4,11 +4,13 @@ import { FunctionDef } from "./components/Function";
 export type Store = {
   func: FunctionDef;
   depth: number;
+  rotating: boolean;
   frame: number;
   maxFrame: number;
 
   setFunc: (f: (s: Store) => FunctionDef) => void;
   setDepth: (d: (s: Store) => number) => void;
+  setRotating: (b: (s: Store) => boolean) => void;
   setFrame: (f: (s: Store) => number) => void;
 
   nextFrame: () => void;
@@ -17,6 +19,7 @@ export type Store = {
 export const useStore = create<Store>((set) => ({
   func: { type: "afine", coef: 1, dec: 0 },
   depth: 1,
+  rotating: false,
   frame: 0,
   maxFrame: 600,
 
@@ -28,6 +31,8 @@ export const useStore = create<Store>((set) => ({
     set((state) => ({
       depth: d(state),
     })),
+  setRotating: (b: (s: Store) => boolean) =>
+    set((state) => ({ rotating: b(state) })),
   setFrame: (f: (s: Store) => number) => set((state) => ({ frame: f(state) })),
 
   nextFrame: () =>

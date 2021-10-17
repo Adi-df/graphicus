@@ -1,12 +1,13 @@
 import { Box, Switch, Text } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
+import { useStore } from "../store";
 
 export const Rotating: FC<{
   height?: string;
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [rotating, setRotating] = useState(false);
+  const setRotating = useStore((state) => state.setRotating);
 
   return (
     <Box
@@ -17,7 +18,7 @@ export const Rotating: FC<{
       borderRadius="2xl"
     >
       <Text fontSize="3xl">Rotating :</Text>
-      <Switch onChange={() => setRotating((v) => !v)} />
+      <Switch onChange={() => setRotating((v) => !v.rotating)} />
     </Box>
   );
 };
