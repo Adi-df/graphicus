@@ -17,8 +17,9 @@ export const Timeline: FC<{
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [frame, nextFrame, setFrame] = useStore((state) => [
+  const [frame, maxFrame, nextFrame, setFrame] = useStore((state) => [
     state.frame,
+    state.maxFrame,
     state.nextFrame,
     state.setFrame,
   ]);
@@ -49,8 +50,8 @@ export const Timeline: FC<{
       <Text fontSize="3xl">Timeline :</Text>
       <Flex>
         <Slider
-          min={0}
-          max={240}
+          min={1}
+          max={maxFrame}
           value={frame}
           onChange={(e) => setFrame((_) => e)}
         >
