@@ -7,14 +7,18 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
+import { useStore } from "../store";
 
 export const Rotating: FC<{
   height?: string;
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [rotating, setRotating] = useState(0);
+  const [rotating, setRotating] = useStore((state) => [
+    state.rotating,
+    state.setRotating,
+  ]);
 
   return (
     <Box
@@ -30,7 +34,7 @@ export const Rotating: FC<{
           min={0}
           max={10}
           value={rotating}
-          onChange={(e) => setRotating(e)}
+          onChange={(e) => setRotating((_) => e)}
         >
           <SliderTrack>
             <SliderFilledTrack />

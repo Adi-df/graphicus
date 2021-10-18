@@ -47,7 +47,7 @@ export const Canvas: FC = () => {
 
     let rootTriangle: Polygon = Array.from(Array(3))
       .map((_, i) => (TAU / 3) * i)
-      .map((v) => (rotating ? v + (TAU / maxFrame) * frame : v))
+      .map((v) => v + (TAU / maxFrame) * (frame * rotating))
       .map((a) => [
         CENTER[0] + Math.cos(a) * RADIUS,
         CENTER[1] + Math.sin(a) * RADIUS,
