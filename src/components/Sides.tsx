@@ -5,14 +5,15 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@chakra-ui/slider";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
+import { useStore } from "../store";
 
 export const Sides: FC<{
   height?: string;
   width?: string;
   margin?: string;
 }> = (props) => {
-  const [sides, setSides] = useState(3);
+  const [sides, setSides] = useStore((state) => [state.sides, state.setSides]);
 
   return (
     <Box
@@ -28,7 +29,7 @@ export const Sides: FC<{
           min={3}
           max={10}
           defaultValue={sides}
-          onChange={(e) => setSides(e)}
+          onChange={(e) => setSides((_) => e)}
         >
           <SliderTrack>
             <SliderFilledTrack />

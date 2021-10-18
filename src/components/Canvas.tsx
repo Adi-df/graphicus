@@ -5,7 +5,7 @@ import { lerp, Point, Polygon } from "../math";
 import { FunctionDef } from "./Function";
 
 export const Canvas: FC = () => {
-  const { func, depth, rotating, frame, maxFrame } = useStore();
+  const { func, depth, rotating, sides, frame, maxFrame } = useStore();
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -45,15 +45,15 @@ export const Canvas: FC = () => {
     context.arc(CENTER[0], CENTER[1], RADIUS, 0, TAU);
     context.stroke();
 
-    let rootTriangle: Polygon = Array.from(Array(3))
-      .map((_, i) => (TAU / 3) * i)
+    let rootPoly: Polygon = Array.from(Array(sides))
+      .map((_, i) => (TAU / sides) * i)
       .map((v) => v + (TAU / maxFrame) * (frame * rotating))
       .map((a) => [
         CENTER[0] + Math.cos(a) * RADIUS,
         CENTER[1] + Math.sin(a) * RADIUS,
       ]);
 
-    drawPoly(rootTriangle);
+    drawPoly(rootPoly);
 
     const convertFunc = (func: FunctionDef) =>
       func.type === "afine"
@@ -70,20 +70,20 @@ export const Canvas: FC = () => {
       frame: number,
       func: (f: number) => number
     ) => {
-      const childTriangle = root.map((p, i, a) =>
+      const childPoly = root.map((p, i, a) =>
         lerp([p, a[(i + 1) % a.length]], Math.abs(frame % 1))
       ) as Polygon;
-      drawPoly(childTriangle);
-      if (depth > 0) recursive(depth - 1, childTriangle, func(frame), func);
+      drawPoly(childPoly);
+      if (depth > 0) recursive(depth - 1, childPoly, func(frame), func);
     };
 
     recursive(
       depth - 1,
-      rootTriangle,
+      rootPoly,
       convertFunc(func)(frame / maxFrame),
       convertFunc(func)
     );
-  }, [frame, context, depth, rotating, func, maxFrame]);
+  }, [frame, context, depth, rotating, func, maxFrame, sides]);
 
   return (
     <Box border="white 2px solid" borderRadius="2xl" width="100%" height="100%">
