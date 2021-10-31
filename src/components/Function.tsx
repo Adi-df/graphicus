@@ -13,7 +13,7 @@ import { render as renderFormulae } from "katex";
 import "../../node_modules/katex/dist/katex.min.css";
 import { useStore } from "../store";
 
-export type FunctionDef = (x: number) => number;
+export type FunctionDef = (x: number, f: number, d: number) => number;
 export type FunctionBuilder = (m: string) => FunctionDef;
 
 export const Function: FC<{
@@ -27,7 +27,7 @@ export const Function: FC<{
 
   const buildFunction: FunctionBuilder = (m: string) => {
     const parser = mathParser();
-    parser.evaluate(`f(x) = ${m}`);
+    parser.evaluate(`f(x,f,d) = ${m}`);
     return parser.get("f");
   };
 

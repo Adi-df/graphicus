@@ -19,7 +19,7 @@ export type Store = {
 };
 
 export const useStore = create<Store>((set) => ({
-  func: (x: number) => x,
+  func: (x: number, f: number, d: number) => x,
   depth: 1,
   rotating: 0,
   sides: 3,
