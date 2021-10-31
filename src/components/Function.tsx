@@ -22,6 +22,7 @@ export const Function: FC<{
   margin?: string;
 }> = (props) => {
   const formulaeRef = useRef<null | HTMLElement>(null);
+  const [err, setErr] = useState(false);
   const [funcString, setFuncString] = useState("x");
   const setFunc = useStore((state) => state.setFunc);
 
@@ -42,11 +43,16 @@ export const Function: FC<{
     >
       <Text fontSize="3xl">Function :</Text>
       <Box>
+        {err ? (
+          <Text color="red" fontWeight="bold">
+            Wrong formulae :
+          </Text>
+        ) : null}
         <InputGroup>
           <InputLeftAddon
             backgroundColor="white"
             color="black"
-            children={"f(x) = "}
+            children={"f(x,f,d) = "}
           />
           <Input
             focusBorderColor="white"
@@ -62,9 +68,15 @@ export const Function: FC<{
                 backgroundColor="white"
                 _hover={{ bg: "white" }}
                 onClick={() => {
-                  setFunc((_) => buildFunction(funcString));
-                  if (formulaeRef.current)
-                    renderFormulae(funcString, formulaeRef.current);
+                  if (formulaeRef.current) {
+                    try {
+                      renderFormulae(funcString, formulaeRef.current);
+                      setFunc((_) => buildFunction(funcString));
+                      setErr(false);
+                    } catch (e) {
+                      setErr(true);
+                    }
+                  }
                 }}
               >
                 Update
