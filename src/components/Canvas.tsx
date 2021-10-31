@@ -2,7 +2,6 @@ import React, { FC, useRef, useEffect, useState } from "react";
 import { Box } from "@chakra-ui/layout";
 import { useStore } from "../store";
 import { lerp, Point, Polygon } from "../math";
-import { FunctionDef } from "./Function";
 
 export const Canvas: FC = () => {
   const { func, depth, rotating, sides, frame, maxFrame } = useStore();
@@ -55,15 +54,6 @@ export const Canvas: FC = () => {
 
     drawPoly(rootPoly);
 
-    const convertFunc = (func: FunctionDef) =>
-      func.type === "afine"
-        ? (f: number) => func.coef * f + func.dec
-        : func.type === "power"
-        ? (f: number) => func.coef * f ** func.power + func.dec
-        : func.type === "inverse"
-        ? (f: number) => func.coef * (1 / f ** func.power) + func.dec
-        : (f: number) => f;
-
     const recursive = (
       depth: number,
       root: Polygon,
@@ -77,12 +67,7 @@ export const Canvas: FC = () => {
       if (depth > 0) recursive(depth - 1, childPoly, func(frame), func);
     };
 
-    recursive(
-      depth - 1,
-      rootPoly,
-      convertFunc(func)(frame / maxFrame),
-      convertFunc(func)
-    );
+    recursive(depth - 1, rootPoly, func(frame / maxFrame), func);
   }, [frame, context, depth, rotating, func, maxFrame, sides]);
 
   return (

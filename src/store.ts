@@ -19,7 +19,7 @@ export type Store = {
 };
 
 export const useStore = create<Store>((set) => ({
-  func: { type: "afine", coef: 1, dec: 0 },
+  func: (x: number) => x,
   depth: 1,
   rotating: 0,
   sides: 3,
